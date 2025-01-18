@@ -35,11 +35,21 @@ export const videoControllers = {
 
     createVideo: (req: Request, res: Response) => {
         const video: CreateVideoInputModel = req.body
+
+        const createdAt = new Date().toISOString(); // Текущая дата
+        const createdAtDate = new Date(createdAt);
+        const publicationDate = new Date(createdAtDate);
+        publicationDate.setDate(createdAtDate.getDate() + 1);
+
         const newVideo: VideoDBType = {
-            ...video,
             id: Date.now() + Math.random(),
-            createdAt: new Date().toISOString(),
-            publicationDate: new Date().toISOString()
+            createdAt: createdAt,
+            publicationDate: publicationDate.toISOString(),
+            minAgeRestriction: video.minAgeRestriction || null,
+            availableResolution: [Resolutions.P240],
+            canBeDownloaded: video.canBeDownloaded || false,
+            title: video.title,
+            author: video.author,
         }
         console.log('New video:', newVideo);
         // добавляем видео в базу данных

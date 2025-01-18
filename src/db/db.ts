@@ -16,18 +16,18 @@ export enum Resolutions {
 }
 
 export const db: DBType = {
-    videos: [
-        {
+    videos: [],
+        // {
+            // // id: Date.now() + Math.random(),
             // id: Date.now() + Math.random(),
-            id: Date.now() + Math.random(),
-            title: 't' + Date.now() + Math.random(),
-            author: 'a' + Date.now() + Math.random(),
-            canBeDownloaded: true,
-            minAgeRestriction: null,
-            createdAt: new Date().toISOString(),
-            publicationDate: new Date().toISOString(),
-            availableResolution: [Resolutions.P240],
-        },
+            // title: 't' + Date.now() + Math.random(),
+            // author: 'a' + Date.now() + Math.random(),
+            // canBeDownloaded: true,
+            // minAgeRestriction: null,
+            // createdAt: new Date().toISOString(),
+            // publicationDate: new Date().toISOString(),
+            // availableResolution: [Resolutions.P240],
+        // },
         // {
         //     id: 2,
         //     title: 'Sample Video',
@@ -48,7 +48,7 @@ export const db: DBType = {
         //     publicationDate: '2025-01-16T10:00:00Z',
         //     availableResolution: [Resolutions.P240, Resolutions.P720], // Корректное использование
         // }
-    ]
+    // ]
 }
 
 // функция для быстрой очистки/заполнения базы данных для тестов

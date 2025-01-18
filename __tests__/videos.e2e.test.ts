@@ -28,6 +28,7 @@ describe('/videos', () => {
             author: 'new author',
             canBeDownloaded: false,
             minAgeRestriction: 12,
+            publicationDate: new Date().toISOString() + 1,
             availableResolution: [Resolutions.P144, Resolutions.P240],
         };
 

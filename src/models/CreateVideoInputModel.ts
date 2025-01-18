@@ -8,5 +8,6 @@ export type CreateVideoInputModel = {
     author: string,
     canBeDownloaded: boolean,
     minAgeRestriction: number | null,
+    "publicationDate": string,
     availableResolution: Resolutions[],
 }
