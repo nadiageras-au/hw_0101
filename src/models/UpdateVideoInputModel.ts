@@ -1,4 +1,4 @@
-import {Resolutions} from "../db/db";
+import {Resolutions} from "db/db";
 
 type MinAgeRestriction = number & { readonly __brand: 'MinAgeRestriction' };
 
