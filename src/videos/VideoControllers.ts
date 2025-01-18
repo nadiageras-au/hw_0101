@@ -37,7 +37,7 @@ export const videoControllers = {
         const video: CreateVideoInputModel = req.body
         const newVideo: VideoDBType = {
             ...video,
-            id: db.videos.length + 1,
+            id: Date.now() + Math.random(),
             createdAt: new Date().toISOString(),
             publicationDate: new Date().toISOString()
         }
