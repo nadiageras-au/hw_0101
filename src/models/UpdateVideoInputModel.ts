@@ -8,16 +8,16 @@ function createMinAgeRestriction(age: number): MinAgeRestriction | null {
         return age as MinAgeRestriction;
     }
     throw new Error('minAgeRestriction must be between 1 and 18');
-};
+}
 
 export type UpdateVideoInputModel = {
     id?: number;
-    title?:string;
-    author?:	string;
-    canBeDownloaded?:boolean; // By default - false
-    minAgeRestriction?: MinAgeRestriction;//maximum: 18 - minimum: 1 default: null
+    title?: string;
+    author?: string;
+    canBeDownloaded?: boolean; // By default - false
+    minAgeRestriction?: MinAgeRestriction; // maximum: 18 - minimum: 1 default: null
     createdAt?: string;
-    publicationDate?: string ;//By default - +1 day from CreatedAt
+    publicationDate?: string; // By default - +1 day from CreatedAt
     availableResolution?: Resolutions[];
     errorsMessages?: string[];
-}
+};
