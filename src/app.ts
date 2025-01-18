@@ -1,8 +1,6 @@
 import express, {Request, Response} from 'express';
 import cors from 'cors';
 import {SETTINGS} from "./settings";
-import {videoControllers} from "./videos/VideosControllers";
-import {db} from  './db/db'
 import {videosRouter} from "./routes/videos";
 
 export const app = express();
