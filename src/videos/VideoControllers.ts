@@ -56,8 +56,7 @@ export const videoControllers = {
         }
 
         const foundVideo: any = db.videos.find(v => v.id === videoId)
-        console.log('Before update:', foundVideo);
-        console.log('Request body:', req.body);
+
         if (!foundVideo) {
             return res.status(HTTP_STATUSES.NOT_FOUND_404); // Если видео не найдено, возвращаем 404
         } else {
@@ -66,9 +65,6 @@ export const videoControllers = {
 
             res.status(HTTP_STATUSES.OK_200).json(foundVideo);
         }
-
-
-        console.log('Updated database:', db.videos);
 
     },
     deleteVideo: (req: RequestWithUriParams<URIParamsVideoIdModel>, res: Response) => {
@@ -79,7 +75,6 @@ export const videoControllers = {
             db.videos.splice(videoIndex, 1);
             res.status(HTTP_STATUSES.NO_CONTENT_204).send();
         }
-
     },
     deleteAllVideos: (req: Request, res: Response) => {
         db.videos = [];

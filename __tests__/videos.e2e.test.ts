@@ -19,9 +19,6 @@ describe('/videos', () => {
         const res = await request(app)
             .get(SETTINGS.PATH.VIDEOS)
             .expect(HTTP_STATUSES.OK_200);
-
-        console.log('GET /videos response:', res.body);
-
         expect(res.body.length).toBe(0); // Проверяем, что массив пустой
     });
 
@@ -39,15 +36,11 @@ describe('/videos', () => {
             .send(data)
             .expect(HTTP_STATUSES.CREATED_201);
 
-        console.log('POST /videos response:', createResponse.body);
-
         createdVideo1 = createResponse.body;
 
         const getResponse = await request(app)
             .get(SETTINGS.PATH.VIDEOS)
             .expect(HTTP_STATUSES.OK_200);
-
-        console.log('GET /videos after creation response:', getResponse.body);
 
         expect(getResponse.body.length).toBe(1); // Проверяем, что массив содержит 1 элемент
         expect(getResponse.body[0]).toEqual(createdVideo1); // Проверяем, что данные совпадают
@@ -61,19 +54,14 @@ describe('/videos', () => {
             canBeDownloaded: true,
         };
 
-        console.log('createdVideo1:', createdVideo1);
         const updateResponse = await request(app)
             .put('/videos/' + createdVideo1.id)
             .send(updateData)
             .expect(HTTP_STATUSES.OK_200);
 
-        console.log('PUT /videos response:', updateResponse.body);
-
         const getResponse = await request(app)
             .get('/videos/' + createdVideo1.id)
             .expect(HTTP_STATUSES.OK_200);
-
-        console.log('GET /videos/:id after update response:', getResponse.body);
 
         expect(getResponse.body).toEqual({
             ...createdVideo1,
@@ -84,5 +72,19 @@ describe('/videos', () => {
     it(`should delete video`, async ()=> {
         await request(app)
             .delete('/videos/' + createdVideo1.id)
-    })
+    });
+
+    it(`should delete all videos`, async ()=> {
+        await request(app)
+            .delete('/videos')
+            .expect(HTTP_STATUSES.NO_CONTENT_204);
+    });
+
+    it('should return empty array after deleting all videos', async () => {
+        const res = await request(app)
+            .get(SETTINGS.PATH.VIDEOS)
+            .expect(HTTP_STATUSES.OK_200);
+
+        expect(res.body.length).toBe(0); // Проверяем, что массив пустой
+    });
 });

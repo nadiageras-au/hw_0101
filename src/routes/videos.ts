@@ -10,6 +10,7 @@ videosRouter.get('/:id', videoControllers.getVideo); // Получение ви�
 videosRouter.put('/:id', videoControllers.updateVideo); // Обновление видео
 // @ts-ignore
 videosRouter.delete('/:id', videoControllers.deleteVideo); // Обновление видео
+videosRouter.delete('/', videoControllers.deleteAllVideos); // Обновление видео
 
 videosRouter.post('/', videoControllers.createVideo); // Создание нового видео
 
