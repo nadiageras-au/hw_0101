@@ -1,6 +1,6 @@
 import {Resolutions} from "../db/db";
 
-export type VideoDBType = {
+export type VideoOutputModel = {
     id: number
     title: string
     author: string
