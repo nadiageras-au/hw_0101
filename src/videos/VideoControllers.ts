@@ -44,7 +44,7 @@ export const videoControllers = {
         console.log('New video:', newVideo);
         // добавляем видео в базу данных
         db.videos.push(newVideo)
-        res.status(HTTP_STATUSES.CREATED_201).json(newVideo) // отдаём видео в качестве ответа
+        res.status(HTTP_STATUSES.NO_CONTENT_204)
     },
 
     updateVideo: (req: RequestWithUriParams<URIParamsVideoIdModel>, res: Response) => {
@@ -70,15 +70,15 @@ export const videoControllers = {
     deleteVideo: (req: RequestWithUriParams<URIParamsVideoIdModel>, res: Response) => {
         const videoIndex = db.videos.findIndex(video => video.id === parseInt(req.params.id));
         if (videoIndex === -1) {
-            return res.status(HTTP_STATUSES.NOT_FOUND_404).send({message: 'Video not found'});
+            return res.status(HTTP_STATUSES.NOT_FOUND_404);
         } else {
             db.videos.splice(videoIndex, 1);
-            res.status(HTTP_STATUSES.NO_CONTENT_204).send();
+            res.status(HTTP_STATUSES.NO_CONTENT_204);
         }
     },
     deleteAllVideos: (req: Request, res: Response) => {
         db.videos = [];
-        res.status(HTTP_STATUSES.NO_CONTENT_204).send();
+        res.status(HTTP_STATUSES.NO_CONTENT_204);
     }
 }
 

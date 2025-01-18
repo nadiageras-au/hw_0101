@@ -19,7 +19,7 @@ export const db: DBType = {
     videos: [
         {
             // id: Date.now() + Math.random(),
-            id: 1,
+            id: Date.now() + Math.random(),
             title: 't' + Date.now() + Math.random(),
             author: 'a' + Date.now() + Math.random(),
             canBeDownloaded: true,
@@ -28,26 +28,26 @@ export const db: DBType = {
             publicationDate: new Date().toISOString(),
             availableResolution: [Resolutions.P240],
         },
-        {
-            id: 2,
-            title: 'Sample Video',
-            author: 'Author Name',
-            canBeDownloaded: true,
-            minAgeRestriction: 18,
-            createdAt: '2025-01-15T10:00:00Z',
-            publicationDate: '2025-01-16T10:00:00Z',
-            availableResolution: [Resolutions.P240, Resolutions.P720], // Корректное использование
-        },
-        {
-            id: 3,
-            title: 'Sample Video 3',
-            author: 'Author Name 3',
-            canBeDownloaded: true,
-            minAgeRestriction: 18,
-            createdAt: '2025-01-15T10:00:00Z',
-            publicationDate: '2025-01-16T10:00:00Z',
-            availableResolution: [Resolutions.P240, Resolutions.P720], // Корректное использование
-        }
+        // {
+        //     id: 2,
+        //     title: 'Sample Video',
+        //     author: 'Author Name',
+        //     canBeDownloaded: true,
+        //     minAgeRestriction: 18,
+        //     createdAt: '2025-01-15T10:00:00Z',
+        //     publicationDate: '2025-01-16T10:00:00Z',
+        //     availableResolution: [Resolutions.P240, Resolutions.P720], // Корректное использование
+        // },
+        // {
+        //     id: 3,
+        //     title: 'Sample Video 3',
+        //     author: 'Author Name 3',
+        //     canBeDownloaded: true,
+        //     minAgeRestriction: 18,
+        //     createdAt: '2025-01-15T10:00:00Z',
+        //     publicationDate: '2025-01-16T10:00:00Z',
+        //     availableResolution: [Resolutions.P240, Resolutions.P720], // Корректное использование
+        // }
     ]
 }
 
