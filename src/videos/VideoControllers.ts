@@ -14,37 +14,39 @@ export type DBType = {
     videos: VideoDBType[]
 }
 
-const inputValidation = (video: CreateVideoInputModel) => {
+const inputValidation = (video: CreateVideoInputModel): OutputErrorsType | undefined => {
     const errors: OutputErrorsType = {
         errorsMessages: []
-    }
+    };
 
     //#1 title
     if (!video.title) {
         errors.errorsMessages.push({
-            message: 'error!!!!', field: 'title'
-        })
-        return
+            message: 'error!!!!',
+            field: 'title'
+        });
     }
+
     //#2 author
     if (!video.author) {
         errors.errorsMessages.push({
-            message: 'error!!!!', field: 'author'
-        })
-        return
+            message: 'error!!!!',
+            field: 'author'
+        });
     }
 
     //#3 minAgeRestriction
     if (video.minAgeRestriction) {
         if (video.minAgeRestriction < 1 || video.minAgeRestriction > 18) {
             errors.errorsMessages.push({
-                message: 'error!!!!', field: 'minAgeRestriction'
-            })
+                message: 'error!!!!',
+                field: 'minAgeRestriction'
+            });
         }
         errors.errorsMessages.push({
-            message: 'error!!!!', field: 'minAgeRestriction must be between 1 and 18'
-        })
-        return
+            message: 'error!!!!',
+            field: 'minAgeRestriction must be between 1 and 18'
+        });
     }
 
     //#4 resolutions
@@ -55,7 +57,6 @@ const inputValidation = (video: CreateVideoInputModel) => {
             message: 'Invalid resolution provided',
             field: 'availableResolution',
         });
-        return
     }
 
     //#5 dates
@@ -64,14 +65,15 @@ const inputValidation = (video: CreateVideoInputModel) => {
         const publication = new Date(video.publicationDate);
         if (publication < created) {
             errors.errorsMessages.push({
-                message: 'error!!!!', field: 'publicationDate cannot be less than createdAt'
-            })
+                message: 'error!!!!',
+                field: 'publicationDate cannot be less than createdAt'
+            });
         }
-        return
     }
 
+    // Return errors if there are any; otherwise, return undefined
     return errors.errorsMessages.length > 0 ? errors : undefined;
-}
+};
 
 
 export const videoControllers = {
@@ -104,7 +106,6 @@ export const videoControllers = {
         }
 
         const video: CreateVideoInputModel = req.body
-
         const createdAt = new Date().toISOString(); // Текущая дата
         const createdAtDate = new Date(createdAt);
         const publicationDate = new Date(createdAtDate);
@@ -113,6 +114,10 @@ export const videoControllers = {
         const newVideo: VideoDBType = {
             ...req.body,
             id: Date.now() + Math.random(),
+            createdAt: createdAt,
+            publicationDate: publicationDate.toISOString(),
+            minAgeRestriction: video.minAgeRestriction || null,
+            canBeDownloaded: video.canBeDownloaded || false
         }
         console.log('New video:', newVideo);
         // добавляем видео в базу данных
