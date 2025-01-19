@@ -60,8 +60,10 @@ const inputValidation = (video: CreateVideoInputModel): OutputErrorsType | undef
     //#5 canBeDownloaded
     if (video.canBeDownloaded !== undefined) {
         if (typeof video.canBeDownloaded !== 'boolean') {
-            // Если тип не boolean, устанавливаем false
-            video.canBeDownloaded = false;
+            errors.errorsMessages.push({
+                message: 'canBeDownloaded must be a boolean',
+                field: 'canBeDownloaded'
+            });
         }
     }
 
