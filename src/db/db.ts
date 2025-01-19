@@ -17,7 +17,7 @@ export const db: DBType = {
             minAgeRestriction: null,
             createdAt: new Date().toISOString(),
             publicationDate: new Date().toISOString(),
-            availableResolution: [Resolutions.P240],
+            availableResolution: ["P360"],
         },
         // {
         //     id: 2,

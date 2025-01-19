@@ -1,4 +1,4 @@
-import {Resolutions} from "types/video-db-type";
+import {Resolutions, ResolutionsString} from "types/video-db-type";
 
 export type CreateVideoInputModel =  {
     title: string
@@ -7,6 +7,6 @@ export type CreateVideoInputModel =  {
     minAgeRestriction?: number | null
     createdAt?: string
     publicationDate?: string
-    availableResolution?: Resolutions[]
+    availableResolution?: ResolutionsString[]
 
 }

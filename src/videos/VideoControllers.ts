@@ -46,11 +46,12 @@ const inputValidation = (video: CreateVideoInputModel) => {
 
     //#4 resolutions
     if (!Array.isArray(video.availableResolution)
-        || video.availableResolution.some((res) => !Object.values(Resolutions).includes(res))
+        || video.availableResolution.some((res) => !(res in Resolutions))
     ) {
         errors.errorsMessages.push({
-            message: 'error!!!!', field: 'availableResolution'
-        })
+            message: 'Invalid resolution provided',
+            field: 'availableResolution',
+        });
     }
 
     //#5 dates
@@ -79,7 +80,7 @@ export const videoControllers = {
 
     getVideo: (req: RequestWithUriParams<URIParamsVideoIdModel>, res: Response<VideoOutputModel | void>) => {
         const videoId = +req.params.id;
-        const foundVideo = db.videos.find(v => v.id === videoId)
+        const foundVideo:VideoDBType | undefined = db.videos.find(v => v.id === videoId)
 
         if (!foundVideo) {
             return res.status(404); // Если видео не найдено, возвращаем 404

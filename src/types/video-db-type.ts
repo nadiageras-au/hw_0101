@@ -1,4 +1,3 @@
-
 export enum Resolutions {
     P144 = '144p',
     P240 = '240p',
@@ -10,21 +9,19 @@ export enum Resolutions {
     P2160 = '2160p',
 }
 
-export type ResolutionsString = keyof typeof Resolutions
-// const x = Resolutions.P144
-// const y = Resolutions[x]
-// const z = Resolutions['P144']
+export type ResolutionsString = keyof typeof Resolutions;
 
 
 export type VideoDBType = {
-    id: number
-    title: string
-    author: string
-    canBeDownloaded: boolean
-    minAgeRestriction: number | null
-    createdAt: string
-    publicationDate: string
-    availableResolution: Resolutions[]
-}
+    id: number;
+    title: string;
+    author: string;
+    canBeDownloaded: boolean;
+    minAgeRestriction: number | null;
+    createdAt: string;
+    publicationDate: string;
+    availableResolution: ResolutionsString[];
+};
+
 
 

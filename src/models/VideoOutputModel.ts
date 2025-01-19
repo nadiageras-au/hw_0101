@@ -1,4 +1,4 @@
-import {Resolutions} from "types/video-db-type";
+import {Resolutions, ResolutionsString} from "types/video-db-type";
 
 export type VideoOutputModel = {
     id: number
@@ -8,5 +8,5 @@ export type VideoOutputModel = {
     minAgeRestriction: number | null
     createdAt: string
     publicationDate: string
-    availableResolution: Resolutions[]
+    availableResolution: ResolutionsString[]
 }
