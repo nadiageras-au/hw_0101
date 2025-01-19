@@ -1,4 +1,4 @@
-import {Resolutions} from "db/db";
+import {Resolutions} from "types/video-db-type";
 
 export type UpdateVideoInputModel = {
     id?: number;
