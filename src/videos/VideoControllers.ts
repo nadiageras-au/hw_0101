@@ -1,25 +1,48 @@
 import express, {Request, Response, Router} from 'express'
 import {VideoDBType} from "../types/video-db-type";
-import {db, Resolutions} from '../db/db'
+import {db} from '../db/db';
+import {Resolutions} from "../types/video-db-type";
 import {RequestWithUriParams} from "../types/types";
 import {URIParamsVideoIdModel} from "../models/URIParamsVideoIdModel";
 import {VideoOutputModel} from "../models/VideoOutputModel";
 import {CreateVideoInputModel} from "../models/CreateVideoInputModel";
 import {HTTP_STATUSES} from "../utils";
 import {UpdateVideoInputModel} from "../models/UpdateVideoInputModel";
+import {OutputErrorsType} from "types/output-error-types";
 
 export type DBType = {
     videos: VideoDBType[]
 }
 
+const inputValidation = (video: CreateVideoInputModel) => {
+    const errors: OutputErrorsType = {
+        errorsMessages: []
+    }
+// ...
+    if (!Array.isArray(video.availableResolution)
+        ||  video.availableResolution.some((res) => !Object.values(Resolutions).includes(res))
+    ) {
+        errors.errorsMessages.push({
+            message: 'error!!!!', field: 'availableResolution'
+        })
+    }
+
+    if (!video.title) {
+        errors.errorsMessages.push({
+            message: 'error!!!!', field: 'title'
+        })
+    }
+    return errors
+}
+
 
 export const videoControllers = {
     // OutputVideoType[]
-    getVideos: (req: Request, res: Response) => {
-        const videos = db.videos // получаем видео из базы данных
+    getVideos: (req: Request, res: Response<any | OutputErrorsType>) => {
+        const videos = db.videos
         res
-            .status(200)
-            .json(videos) // отдаём видео в качестве ответа
+            .status(HTTP_STATUSES.OK_200)
+            .json(videos)
     },
 
     getVideo: (req: RequestWithUriParams<URIParamsVideoIdModel>, res: Response<VideoOutputModel | void>) => {
@@ -33,7 +56,16 @@ export const videoControllers = {
         res.status(200).json(foundVideo);
     },
 
-    createVideo: (req: Request, res: Response) => {
+    createVideo: (req: Request, res: Response<any | OutputErrorsType>) => {
+        const errors = inputValidation(req.body)
+        if (errors.errorsMessages.length) { // если есть ошибки - отправляем ошибки
+            res
+                .status(400)
+                .json(errors)
+            return
+            // return res.status(400).json(errors)
+        }
+
         const video: CreateVideoInputModel = req.body
 
         const createdAt = new Date().toISOString(); // Текущая дата
@@ -42,19 +74,15 @@ export const videoControllers = {
         publicationDate.setDate(createdAtDate.getDate() + 1);
 
         const newVideo: VideoDBType = {
+            ...req.body,
             id: Date.now() + Math.random(),
-            createdAt: createdAt,
-            publicationDate: publicationDate.toISOString(),
-            minAgeRestriction: video.minAgeRestriction || null,
-            availableResolution: [Resolutions.P240],
-            canBeDownloaded: video.canBeDownloaded || false,
-            title: video.title,
-            author: video.author,
         }
         console.log('New video:', newVideo);
         // добавляем видео в базу данных
         db.videos.push(newVideo)
-        res.status(HTTP_STATUSES.NO_CONTENT_204)
+        res
+            .status(HTTP_STATUSES.CREATED_201)
+            .json(newVideo)
     },
 
     updateVideo: (req: RequestWithUriParams<URIParamsVideoIdModel>, res: Response) => {

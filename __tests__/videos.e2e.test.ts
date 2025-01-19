@@ -1,6 +1,7 @@
 import {req} from './test-helpers';
 import request from "supertest";
-import {Resolutions, setDB} from '../src/db/db'
+import { setDB} from '../src/db/db';
+import {Resolutions} from '../src/types/video-db-type';
 // import {dataset1} from './datasets'
 import {SETTINGS} from '../src/settings';
 import {HTTP_STATUSES} from '../src/utils';
@@ -26,9 +27,6 @@ describe('/videos', () => {
         const data: CreateVideoInputModel = {
             title: 'new video name',
             author: 'new author',
-            canBeDownloaded: false,
-            minAgeRestriction: 12,
-            publicationDate: new Date().toISOString() + 1,
             availableResolution: [Resolutions.P144, Resolutions.P240],
         };
 

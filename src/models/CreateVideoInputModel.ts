@@ -1,13 +1,10 @@
-import {Resolutions} from "../db/db";
+import {Resolutions} from "db/db";
 
 export type CreateVideoInputModel = {
     /**
-     * Video name: string, author: string, canBeDownloaded: boolean, minAgeRestriction: number | null, availableResolution: Resolutions[]
+     * Video name: string, author: string, availableResolution: Resolutions[]
      */
-    title: string,
-    author: string,
-    canBeDownloaded: boolean,
-    minAgeRestriction: number | null,
-    "publicationDate": string,
-    availableResolution: Resolutions[],
+    title: string
+    author: string
+    availableResolution: Resolutions[]
 }
