@@ -18,21 +18,53 @@ const inputValidation = (video: CreateVideoInputModel) => {
     const errors: OutputErrorsType = {
         errorsMessages: []
     }
-// ...
+
+    //#1 title
+    if (!video.title) {
+        errors.errorsMessages.push({
+            message: 'error!!!!', field: 'title cannot be empty'
+        })
+    }
+    //#2 author
+    if (!video.author) {
+        errors.errorsMessages.push({
+            message: 'error!!!!', field: 'author cannot be empty'
+        })
+    }
+
+    //#3 minAgeRestriction
+    if (video.minAgeRestriction) {
+        if (video.minAgeRestriction < 1 || video.minAgeRestriction > 18) {
+            errors.errorsMessages.push({
+                message: 'error!!!!', field: 'minAgeRestriction'
+            })
+        }
+        errors.errorsMessages.push({
+            message: 'error!!!!', field: 'minAgeRestriction must be between 1 and 18'
+        })
+    }
+
+    //#4 resolutions
     if (!Array.isArray(video.availableResolution)
-        ||  video.availableResolution.some((res) => !Object.values(Resolutions).includes(res))
+        || video.availableResolution.some((res) => !Object.values(Resolutions).includes(res))
     ) {
         errors.errorsMessages.push({
             message: 'error!!!!', field: 'availableResolution'
         })
     }
 
-    if (!video.title) {
-        errors.errorsMessages.push({
-            message: 'error!!!!', field: 'title'
-        })
+    //#5 dates
+    if (video.createdAt && video.publicationDate) {
+        const created = new Date(video.createdAt);
+        const publication = new Date(video.publicationDate);
+        if (publication < created) {
+            errors.errorsMessages.push({
+                message: 'error!!!!', field: 'publicationDate cannot be less than createdAt'
+            })
+        }
     }
-    return errors
+
+    return errors.errorsMessages.length > 0 ? errors : undefined;
 }
 
 
@@ -56,14 +88,13 @@ export const videoControllers = {
         res.status(200).json(foundVideo);
     },
 
-    createVideo: (req: Request, res: Response<any | OutputErrorsType>) => {
+    createVideo: (req: Request, res: Response< VideoOutputModel | OutputErrorsType>) => {
         const errors = inputValidation(req.body)
-        if (errors.errorsMessages.length) { // если есть ошибки - отправляем ошибки
-            res
+        if (errors) { // если есть ошибки - отправляем ошибки
+
+            return res
                 .status(400)
                 .json(errors)
-            return
-            // return res.status(400).json(errors)
         }
 
         const video: CreateVideoInputModel = req.body

@@ -1,10 +1,12 @@
 import {Resolutions} from "types/video-db-type";
 
-export type CreateVideoInputModel = {
-    /**
-     * Video name: string, author: string, availableResolution: Resolutions[]
-     */
+export type CreateVideoInputModel =  {
     title: string
     author: string
-    availableResolution: Resolutions[]
+    canBeDownloaded?: boolean
+    minAgeRestriction?: number | null
+    createdAt?: string
+    publicationDate?: string
+    availableResolution?: Resolutions[]
+
 }

@@ -47,6 +47,28 @@ describe('/videos', () => {
         expect(getResponse.body[0]).toEqual(createdVideo1); // Проверяем, что данные совпадают
     });
 
+    it('should not create a new video with incorrect data', async () => {
+        const data: CreateVideoInputModel = {
+            title: '',
+            author: 'new author',
+            availableResolution: [Resolutions.P144, Resolutions.P240],
+        };
+
+        const createResponse = await request(app)
+            .post(SETTINGS.PATH.VIDEOS)
+            .send(data)
+            .expect(HTTP_STATUSES.BAD_REQUEST_400);
+
+        createdVideo1 = createResponse.body;
+
+        const getResponse = await request(app)
+            .get(SETTINGS.PATH.VIDEOS)
+            .expect(HTTP_STATUSES.OK_200);
+
+        expect(getResponse.body.length).toBe(1); // Проверяем, что массив содержит 1 элемент
+        expect(getResponse.body[0]).toEqual(createdVideo1); // Проверяем, что данные совпадают
+    });
+
     it('should update an existing video with correct data', async () => {
         // Создаём видео перед обновлением
 
@@ -83,7 +105,7 @@ describe('/videos', () => {
 
     it('should delete all videos and return 204', async () => {
 
-        const response = await request(app).delete(SETTINGS.PATH.TESTING).expect(204);
+        const response = await request(app).delete('/testing/all-data').expect(204);
         // expect(response.status).toBe(204); // Проверяем, что возвращается статус 204
     });
 
