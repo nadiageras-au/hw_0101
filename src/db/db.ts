@@ -10,7 +10,7 @@ export const db: DBType = {
     videos: [
         {
             // id: Date.now() + Math.random(),
-            id: Date.now() + Math.random(),
+            id: Math.floor(Date.now() + Math.random()),
             title: 't' + Date.now() + Math.random(),
             author: 'a' + Date.now() + Math.random(),
             canBeDownloaded: true,

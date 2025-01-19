@@ -113,7 +113,7 @@ export const videoControllers = {
 
         const newVideo: VideoDBType = {
             ...req.body,
-            id: Date.now() + Math.random(),
+            id: Math.floor(Date.now() + Math.random()),
             createdAt: createdAt,
             publicationDate: publicationDate.toISOString(),
             minAgeRestriction: video.minAgeRestriction || null,
@@ -143,17 +143,17 @@ export const videoControllers = {
             if (video.title !== undefined) foundVideo.title = video.title;
             if (video.canBeDownloaded !== undefined) foundVideo.canBeDownloaded = video.canBeDownloaded;
 
-            res.status(HTTP_STATUSES.OK_200).json(foundVideo);
+            res.status(HTTP_STATUSES.NO_CONTENT_204).json();
         }
 
     },
     deleteVideo: (req: RequestWithUriParams<URIParamsVideoIdModel>, res: Response) => {
         const videoIndex = db.videos.findIndex(video => video.id === parseInt(req.params.id));
         if (videoIndex === -1) {
-            return res.status(HTTP_STATUSES.NOT_FOUND_404);
+            return res.status(HTTP_STATUSES.NOT_FOUND_404).json();
         } else {
             db.videos.splice(videoIndex, 1);
-            res.status(HTTP_STATUSES.NO_CONTENT_204);
+            res.status(HTTP_STATUSES.NO_CONTENT_204).json();
         }
     },
     deleteAllVideos: (req: Request, res: Response) => {
