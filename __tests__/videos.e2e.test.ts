@@ -29,7 +29,7 @@ describe('/videos', () => {
         const data: CreateVideoInputModel = {
             title: 'some title',
             author: 'some author',
-            availableResolution: ["P144"]
+            availableResolutions: ["P144"]
         };
 
         const createResponse = await request(app)
@@ -51,7 +51,7 @@ describe('/videos', () => {
         const data: CreateVideoInputModel = {
             title: '',
             author: 'new author',
-            availableResolution: ["P240", "P144"]
+            availableResolutions: ["P240", "P144"]
         };
 
         const createResponse = await request(app)

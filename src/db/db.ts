@@ -17,7 +17,7 @@ export const db: DBType = {
             minAgeRestriction: null,
             createdAt: new Date().toISOString(),
             publicationDate: new Date().toISOString(),
-            availableResolution: ["P360"],
+            availableResolutions: ["P360"],
         },
         // {
         //     id: 2,
@@ -27,7 +27,7 @@ export const db: DBType = {
         //     minAgeRestriction: 18,
         //     createdAt: '2025-01-15T10:00:00Z',
         //     publicationDate: '2025-01-16T10:00:00Z',
-        //     availableResolution: [Resolutions.P240, Resolutions.P720], // Корректное использование
+        //     availableResolutions: [Resolutions.P240, Resolutions.P720], // Корректное использование
         // },
         // {
         //     id: 3,
@@ -37,7 +37,7 @@ export const db: DBType = {
         //     minAgeRestriction: 18,
         //     createdAt: '2025-01-15T10:00:00Z',
         //     publicationDate: '2025-01-16T10:00:00Z',
-        //     availableResolution: [Resolutions.P240, Resolutions.P720], // Корректное использование
+        //     availableResolutions: [Resolutions.P240, Resolutions.P720], // Корректное использование
         // }
      ]
 }

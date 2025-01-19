@@ -50,8 +50,8 @@ const inputValidation = (video: CreateVideoInputModel): OutputErrorsType | undef
     }
 
     //#4 resolutions
-    if (!Array.isArray(video.availableResolution)
-        || video.availableResolution.some((res) => !(res in Resolutions))
+    if (!Array.isArray(video.availableResolutions)
+        || video.availableResolutions.some((res) => !(res in Resolutions))
     ) {
         errors.errorsMessages.push({
             message: 'Invalid resolution provided',

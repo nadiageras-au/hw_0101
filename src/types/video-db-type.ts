@@ -20,7 +20,7 @@ export type VideoDBType = {
     minAgeRestriction: number | null;
     createdAt: string;
     publicationDate: string;
-    availableResolution: ResolutionsString[];
+    availableResolutions: ResolutionsString[];
 };
 
 

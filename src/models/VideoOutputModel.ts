@@ -8,5 +8,5 @@ export type VideoOutputModel = {
     minAgeRestriction: number | null
     createdAt: string
     publicationDate: string
-    availableResolution: ResolutionsString[]
+    availableResolutions: ResolutionsString[]
 }
