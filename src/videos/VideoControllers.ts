@@ -22,14 +22,16 @@ const inputValidation = (video: CreateVideoInputModel) => {
     //#1 title
     if (!video.title) {
         errors.errorsMessages.push({
-            message: 'error!!!!', field: 'title cannot be empty'
+            message: 'error!!!!', field: 'title'
         })
+        return
     }
     //#2 author
     if (!video.author) {
         errors.errorsMessages.push({
-            message: 'error!!!!', field: 'author cannot be empty'
+            message: 'error!!!!', field: 'author'
         })
+        return
     }
 
     //#3 minAgeRestriction
@@ -42,6 +44,7 @@ const inputValidation = (video: CreateVideoInputModel) => {
         errors.errorsMessages.push({
             message: 'error!!!!', field: 'minAgeRestriction must be between 1 and 18'
         })
+        return
     }
 
     //#4 resolutions
@@ -52,6 +55,7 @@ const inputValidation = (video: CreateVideoInputModel) => {
             message: 'Invalid resolution provided',
             field: 'availableResolution',
         });
+        return
     }
 
     //#5 dates
@@ -63,6 +67,7 @@ const inputValidation = (video: CreateVideoInputModel) => {
                 message: 'error!!!!', field: 'publicationDate cannot be less than createdAt'
             })
         }
+        return
     }
 
     return errors.errorsMessages.length > 0 ? errors : undefined;
