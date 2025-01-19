@@ -14,7 +14,7 @@ import {DBType} from "../src/db/db";
 // // готовые данные для переиспользования в тестах
 //
 // export const video1: any /*VideoDBType*/ = {
-//     id: Date.now() + Math.random(),
+//     id: Math.floor(Date.now() + Math.random() * 100000),
 //     title: 't' + Date.now() + Math.random(),
 //     author: 'a' + Date.now() + Math.random(),
 //     canBeDownloaded: true,

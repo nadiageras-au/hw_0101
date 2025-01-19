@@ -121,7 +121,7 @@ export const videoControllers = {
 
         const newVideo: VideoDBType = {
             ...req.body,
-            id: Math.floor(Date.now() + Math.random()),
+            id: Math.floor(Date.now() + Math.random() * 100000),
             createdAt: createdAt,
             publicationDate: publicationDate.toISOString(),
             minAgeRestriction: video.minAgeRestriction || null,
