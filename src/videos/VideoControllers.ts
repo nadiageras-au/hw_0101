@@ -58,13 +58,11 @@ const inputValidation = (video: CreateVideoInputModel): OutputErrorsType | undef
     }
 
     //#5 canBeDownloaded
-    if (video.canBeDownloaded !== undefined && typeof video.canBeDownloaded !== 'boolean') {
-        errors.errorsMessages.push({
-            message: 'canBeDownloaded must be a boolean',
-            field: 'canBeDownloaded'
-        });
-    } else {
-        video.canBeDownloaded = false;
+    if (video.canBeDownloaded !== undefined) {
+        if (typeof video.canBeDownloaded !== 'boolean') {
+            // Если тип не boolean, устанавливаем false
+            video.canBeDownloaded = false;
+        }
     }
 
     //#6 dates
