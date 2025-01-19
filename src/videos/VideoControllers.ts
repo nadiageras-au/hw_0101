@@ -20,17 +20,17 @@ const inputValidation = (video: CreateVideoInputModel): OutputErrorsType | undef
     };
 
     //#1 title
-    if (!video.title) {
+    if (!video.title || typeof video.title !== 'string' || video.title.trim() === '') {
         errors.errorsMessages.push({
-            message: 'error!!!!',
+            message: 'Title is required and must be a non-empty string',
             field: 'title'
         });
     }
 
     //#2 author
-    if (!video.author) {
+    if (!video.author || typeof video.author !== 'string' || video.author.trim() === '') {
         errors.errorsMessages.push({
-            message: 'error!!!!',
+            message: 'Author is required and must be a non-empty string',
             field: 'author'
         });
     }
@@ -39,14 +39,12 @@ const inputValidation = (video: CreateVideoInputModel): OutputErrorsType | undef
     if (video.minAgeRestriction) {
         if (video.minAgeRestriction < 1 || video.minAgeRestriction > 18) {
             errors.errorsMessages.push({
-                message: 'error!!!!',
+                message: 'minAgeRestriction must be between 1 and 18',
                 field: 'minAgeRestriction'
             });
         }
-        errors.errorsMessages.push({
-            message: 'error!!!!',
-            field: 'minAgeRestriction must be between 1 and 18'
-        });
+    } else {
+        video.minAgeRestriction = null;
     }
 
     //#4 resolutions
@@ -55,18 +53,28 @@ const inputValidation = (video: CreateVideoInputModel): OutputErrorsType | undef
     ) {
         errors.errorsMessages.push({
             message: 'Invalid resolution provided',
-            field: 'availableResolution',
+            field: 'availableResolutions',
         });
     }
 
-    //#5 dates
+    //#5 canBeDownloaded
+    if (video.canBeDownloaded !== undefined && typeof video.canBeDownloaded !== 'boolean') {
+        errors.errorsMessages.push({
+            message: 'canBeDownloaded must be a boolean',
+            field: 'canBeDownloaded'
+        });
+    } else {
+        video.canBeDownloaded = false;
+    }
+
+    //#6 dates
     if (video.createdAt && video.publicationDate) {
         const created = new Date(video.createdAt);
         const publication = new Date(video.publicationDate);
         if (publication < created) {
             errors.errorsMessages.push({
-                message: 'error!!!!',
-                field: 'publicationDate cannot be less than createdAt'
+                message: 'publicationDate cannot be less than createdAt',
+                field: 'publicationDate'
             });
         }
     }
@@ -158,7 +166,7 @@ export const videoControllers = {
         db.videos[videoIndex] = updatedVideo;
 
         // Возвращаем успешный ответ с обновлённым видео
-        return res.status(HTTP_STATUSES.OK_200).json(updatedVideo);
+        return res.status(HTTP_STATUSES.NO_CONTENT_204).send();
     },
     deleteVideo: (req: RequestWithUriParams<URIParamsVideoIdModel>, res: Response) => {
         const videoIndex = db.videos.findIndex(video => video.id === parseInt(req.params.id));
