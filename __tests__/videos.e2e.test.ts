@@ -82,9 +82,9 @@ describe('/videos', () => {
     // });
 
     it('should delete all videos and return 204', async () => {
-        console.log('DELETE /testing/all-data called');
-        const response = await request(app).delete('/testing/all-data').expect(204);
-        expect(response.status).toBe(204); // Проверяем, что возвращается статус 204
+
+        const response = await request(app).delete(SETTINGS.PATH.TESTING).expect(204);
+        // expect(response.status).toBe(204); // Проверяем, что возвращается статус 204
     });
 
     it('should return empty array after deleting all videos', async () => {

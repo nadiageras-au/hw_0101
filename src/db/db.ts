@@ -1,4 +1,4 @@
-import {VideoDBType} from '../types/video-db-type'
+import {Resolutions, VideoDBType} from '../types/video-db-type'
 
 export type DBType = {
     videos: VideoDBType[]
@@ -6,18 +6,19 @@ export type DBType = {
 
 
 export const db: DBType = {
-    videos: [],
-        // {
-            // // id: Date.now() + Math.random(),
+    // videos: [],
+    videos: [
+        {
             // id: Date.now() + Math.random(),
-            // title: 't' + Date.now() + Math.random(),
-            // author: 'a' + Date.now() + Math.random(),
-            // canBeDownloaded: true,
-            // minAgeRestriction: null,
-            // createdAt: new Date().toISOString(),
-            // publicationDate: new Date().toISOString(),
-            // availableResolution: [Resolutions.P240],
-        // },
+            id: Date.now() + Math.random(),
+            title: 't' + Date.now() + Math.random(),
+            author: 'a' + Date.now() + Math.random(),
+            canBeDownloaded: true,
+            minAgeRestriction: null,
+            createdAt: new Date().toISOString(),
+            publicationDate: new Date().toISOString(),
+            availableResolution: [Resolutions.P240],
+        },
         // {
         //     id: 2,
         //     title: 'Sample Video',
@@ -38,7 +39,7 @@ export const db: DBType = {
         //     publicationDate: '2025-01-16T10:00:00Z',
         //     availableResolution: [Resolutions.P240, Resolutions.P720], // Корректное использование
         // }
-    // ]
+     ]
 }
 
 // функция для быстрой очистки/заполнения базы данных для тестов

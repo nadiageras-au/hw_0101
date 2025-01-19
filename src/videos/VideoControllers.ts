@@ -116,7 +116,7 @@ export const videoControllers = {
     },
     deleteAllVideos: (req: Request, res: Response) => {
         db.videos = [];
-        res.status(HTTP_STATUSES.NO_CONTENT_204);
+        res.status(HTTP_STATUSES.NO_CONTENT_204).json();
     }
 }
 
