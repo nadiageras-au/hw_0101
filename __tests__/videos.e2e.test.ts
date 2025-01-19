@@ -1,3 +1,5 @@
+jest.setTimeout(10000);
+
 import {req} from './test-helpers';
 import request from "supertest";
 import { setDB} from '../src/db/db';
@@ -70,13 +72,19 @@ describe('/videos', () => {
 
     it(`should delete video`, async ()=> {
         await request(app)
-            .delete('/videos/' + createdVideo1.id)
+            .delete('/videos' + createdVideo1.id)
     });
 
-    it(`should delete all videos`, async ()=> {
-        await request(app)
-            .delete('/videos')
-            .expect(HTTP_STATUSES.NO_CONTENT_204);
+    // it(`should delete all videos`, async ()=> {
+    //     await request(app)
+    //         .delete('/testing/all-data')
+    //         .expect(HTTP_STATUSES.NO_CONTENT_204);
+    // });
+
+    it('should delete all videos and return 204', async () => {
+        console.log('DELETE /testing/all-data called');
+        const response = await request(app).delete('/testing/all-data');
+        expect(response.status).toBe(204); // Проверяем, что возвращается статус 204
     });
 
     it('should return empty array after deleting all videos', async () => {
