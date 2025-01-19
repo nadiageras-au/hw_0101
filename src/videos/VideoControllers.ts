@@ -20,7 +20,7 @@ const inputValidation = (video: CreateVideoInputModel): OutputErrorsType | undef
     };
 
     //#1 title
-    if (!video.title || typeof video.title !== 'string' || video.title.trim() === '') {
+    if (!video.title || typeof video.title !== 'string' || video.title.trim() === '' || video.title.length > 40) {
         errors.errorsMessages.push({
             message: 'Title is required and must be a non-empty string',
             field: 'title'
@@ -28,7 +28,7 @@ const inputValidation = (video: CreateVideoInputModel): OutputErrorsType | undef
     }
 
     //#2 author
-    if (!video.author || typeof video.author !== 'string' || video.author.trim() === '') {
+    if (!video.author || typeof video.author !== 'string' || video.author.trim() === '' || video.author.length > 20) {
         errors.errorsMessages.push({
             message: 'Author is required and must be a non-empty string',
             field: 'author'
@@ -98,7 +98,8 @@ export const videoControllers = {
         const foundVideo: VideoDBType | undefined = db.videos.find(v => v.id === videoId)
 
         if (!foundVideo) {
-            return res.status(404); // Если видео не найдено, возвращаем 404
+            // return res.status(404).json(); // Если видео не найдено, возвращаем 404
+            return res.sendStatus(404); // Если видео не найдено, возвращаем 404
         }
 
         res.status(200).json(foundVideo);
