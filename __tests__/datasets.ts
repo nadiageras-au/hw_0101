@@ -8,8 +8,8 @@ import {DBType} from "../src/db/db";
 // }
 
 // ...// import {VideoDBType} from '../src/db/video-db-type'
-// // import {Resolutions} from '../src/input-output-types/video-types'
-// import {DBType, Resolutions} from '../src/db/db'
+// // import {ResolutionsString} from '../src/input-output-types/video-types'
+// import {DBType, ResolutionsString} from '../src/db/db'
 //
 // // готовые данные для переиспользования в тестах
 //

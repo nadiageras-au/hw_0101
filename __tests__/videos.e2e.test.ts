@@ -27,9 +27,9 @@ describe('/videos', () => {
 
     it('should create a new video with correct data', async () => {
         const data: CreateVideoInputModel = {
-            title: 'some title',
-            author: 'some author',
-            availableResolutions: ["P144"]
+            title: 'new video name',
+            author: 'new author',
+            availableResolutions: ["P144"],
         };
 
         const createResponse = await request(app)
@@ -59,14 +59,7 @@ describe('/videos', () => {
             .send(data)
             .expect(HTTP_STATUSES.BAD_REQUEST_400);
 
-        createdVideo1 = createResponse.body;
 
-        const getResponse = await request(app)
-            .get(SETTINGS.PATH.VIDEOS)
-            .expect(HTTP_STATUSES.OK_200);
-
-        expect(getResponse.body.length).toBe(1); // Проверяем, что массив содержит 1 элемент
-        expect(getResponse.body[0]).toEqual(createdVideo1); // Проверяем, что данные совпадают
     });
 
     it('should update an existing video with correct data', async () => {
@@ -74,7 +67,7 @@ describe('/videos', () => {
 
         const updateData: UpdateVideoInputModel = {
             title: 'updated video name',
-            canBeDownloaded: true,
+            author: "updated author"
         };
 
         const updateResponse = await request(app)

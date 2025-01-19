@@ -1,4 +1,4 @@
-import {Resolutions, VideoDBType} from '../types/video-db-type'
+import {ResolutionsString, VideoDBType} from '../types/video-db-type'
 
 export type DBType = {
     videos: VideoDBType[]

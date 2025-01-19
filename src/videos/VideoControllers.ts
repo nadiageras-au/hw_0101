@@ -87,7 +87,7 @@ export const videoControllers = {
 
     getVideo: (req: RequestWithUriParams<URIParamsVideoIdModel>, res: Response<VideoOutputModel | void>) => {
         const videoId = +req.params.id;
-        const foundVideo:VideoDBType | undefined = db.videos.find(v => v.id === videoId)
+        const foundVideo: VideoDBType | undefined = db.videos.find(v => v.id === videoId)
 
         if (!foundVideo) {
             return res.status(404); // Если видео не найдено, возвращаем 404
@@ -96,7 +96,7 @@ export const videoControllers = {
         res.status(200).json(foundVideo);
     },
 
-    createVideo: (req: Request, res: Response< VideoOutputModel | OutputErrorsType>) => {
+    createVideo: (req: Request, res: Response<VideoOutputModel | OutputErrorsType>) => {
         const errors = inputValidation(req.body)
         if (errors) { // если есть ошибки - отправляем ошибки
 
@@ -128,24 +128,37 @@ export const videoControllers = {
     },
 
     updateVideo: (req: RequestWithUriParams<URIParamsVideoIdModel>, res: Response) => {
-        const videoId = Number(req.params.id);
-        const video: UpdateVideoInputModel = req.body;
+        const videoId = Number(req.params.id); // Преобразуем id в число
+        const videoUpdates: any = req.body; // Получаем данные для обновления
 
-        if (!video.title && !video.canBeDownloaded) {
-            return res.status(HTTP_STATUSES.BAD_REQUEST_400).send({error: "Invalid input data"});
+        // Ищем индекс видео в массиве
+        const videoIndex = db.videos.findIndex((v) => v.id === videoId);
+
+        if (videoIndex === -1) {
+            // Если видео не найдено, возвращаем 404
+            return res.status(HTTP_STATUSES.NOT_FOUND_404).json({
+                message: 'Video not found',
+            });
         }
 
-        const foundVideo: any = db.videos.find(v => v.id === videoId)
+        // Создаём новый объект с обновлениями
+        const updatedVideo = {
+            ...db.videos[videoIndex], // Существующие данные
+            ...videoUpdates, // Обновления
+        };
 
-        if (!foundVideo) {
-            return res.status(HTTP_STATUSES.NOT_FOUND_404); // Если видео не найдено, возвращаем 404
-        } else {
-            if (video.title !== undefined) foundVideo.title = video.title;
-            if (video.canBeDownloaded !== undefined) foundVideo.canBeDownloaded = video.canBeDownloaded;
-
-            res.status(HTTP_STATUSES.NO_CONTENT_204).json();
+        // Валидируем обновлённый объект
+        const errors = inputValidation(updatedVideo);
+        if (errors) {
+            // Если есть ошибки, возвращаем их
+            return res.status(HTTP_STATUSES.BAD_REQUEST_400).json(errors);
         }
 
+        // Сохраняем обновлённое видео в массив
+        db.videos[videoIndex] = updatedVideo;
+
+        // Возвращаем успешный ответ с обновлённым видео
+        return res.status(HTTP_STATUSES.OK_200).json(updatedVideo);
     },
     deleteVideo: (req: RequestWithUriParams<URIParamsVideoIdModel>, res: Response) => {
         const videoIndex = db.videos.findIndex(video => video.id === parseInt(req.params.id));
