@@ -1,5 +1,5 @@
 import express, {Request, Response, Router} from 'express'
-import {VideoDBType} from "../types/video-db-type";
+import {ResolutionsString, VideoDBType} from "../types/video-db-type";
 import {db} from '../db/db';
 import {Resolutions} from "../types/video-db-type";
 import {RequestWithUriParams} from "../types/types";
